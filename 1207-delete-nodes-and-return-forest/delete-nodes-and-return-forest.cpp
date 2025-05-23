@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode* solve(TreeNode* root,unordered_set<int>st,vector<TreeNode*>&v){
+    TreeNode* solve(TreeNode* root,unordered_set<int>&st,vector<TreeNode*>&v){
         if(root==NULL) return NULL;
         root->left=solve(root->left,st,v);
         root->right=solve(root->right,st,v);
