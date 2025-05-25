@@ -1,8 +1,7 @@
 class Solution {
 public:
     int longestPalindrome(vector<string>& words) {
-        unordered_map<string, int> mp1;
-        unordered_map<string, int> mp2;
+        unordered_map<string, int> mp;
         int len = 0;
 
         for (auto w : words) {
@@ -10,16 +9,16 @@ public:
             reverse(rev.begin(), rev.end());
 
             if (w == rev) {
-                mp2[w]++;
+                mp[w]++;
             } else {
-                if (mp1.find(rev) != mp1.end() && mp1[rev] > 0) {
+                if (mp.find(rev) != mp.end() && mp[rev] > 0) {
                     len += 4;
-                    mp1[rev]--;
-                    if (mp1[rev] == 0) {
-                        mp1.erase(rev);
+                    mp[rev]--;
+                    if (mp[rev] == 0) {
+                        mp.erase(rev);
                     }
                 } else {
-                    mp1[w]++;
+                    mp[w]++;
                 }
             }
         }
@@ -27,13 +26,18 @@ public:
         int full = 0;
         bool cen = false;
 
-        for (auto it : mp2) {
-            if (it.second % 2 != 0) cen = true;
-            full += it.second / 2;
+        for (auto it : mp) {
+            string s = it.first;
+            if (s[0] == s[1]) {
+                if (it.second % 2 != 0)
+                    cen = true;
+                full += it.second / 2;
+            }
         }
 
         len += full * 4;
-        if (cen) len += 2;
+        if (cen)
+            len += 2;
 
         return len;
     }
