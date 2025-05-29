@@ -4,27 +4,29 @@ public:
         int ans=INT_MAX;
         int n=matrix.size();
         int m=matrix[0].size();
-        vector<vector<int>>dp(n,vector<int>(m));
+        vector<int>nxt(m);
+        vector<int>curr(m);
         for(int j=0;j<m;j++){
-            dp[n-1][j]=matrix[n-1][j];
+            nxt[j]=matrix[n-1][j];
         }
         for(int i=n-2;i>=0;i--){
             for(int j=0;j<m;j++){
-                int d=dp[i+1][j];
+                int d=nxt[j];
                 int l=INT_MAX;
                 int r=INT_MAX;
                 if(j-1>=0){
-                    l=dp[i+1][j-1];
+                    l=nxt[j-1];
                 }
                 if(j+1<=m-1){
-                    r=dp[i+1][j+1];
+                    r=nxt[j+1];
                 }
-                dp[i][j]= matrix[i][j] +min(l,min(d,r));
+                curr[j]= matrix[i][j] +min(l,min(d,r));
 
             }
+            nxt=curr;
         }
         for(int i=0;i<m;i++){
-            ans=min(ans,dp[0][i]);
+            ans=min(ans,nxt[i]);
         }
         return ans;
         
