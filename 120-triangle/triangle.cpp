@@ -4,7 +4,7 @@ public:
         if (i == n - 1) {
             return triangle[i][j];
         }
-        if (dp[i][j] != -1) return dp[i][j];
+        if (dp[i][j] != INT_MAX) return dp[i][j];
 
         int d1 = solve(i + 1, j, dp, triangle, n);
         int d2 = solve(i + 1, j + 1, dp, triangle, n);
@@ -14,7 +14,7 @@ public:
 
     int minimumTotal(vector<vector<int>>& triangle) {
         int n = triangle.size();
-        vector<vector<int>> dp(n, vector<int>(n, -1));
+        vector<vector<int>> dp(n, vector<int>(n, INT_MAX));
         return solve(0, 0, dp, triangle, n);
     }
 };
