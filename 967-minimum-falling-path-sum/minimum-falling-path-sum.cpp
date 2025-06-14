@@ -1,35 +1,29 @@
 class Solution {
 public:
+    int solve(int i,int j ,vector<vector<int>>&matrix,vector<vector<int>>&dp){
+        int n=matrix.size();
+        if(i==n-1) return matrix[i][j];
+        if(dp[i][j]!=INT_MAX)return dp[i][j];
+        int left=INT_MAX;
+        int right=INT_MAX;
+        int down=solve(i+1,j,matrix,dp);
+        if(j-1>=0){
+            left=solve(i+1,j-1,matrix,dp);
+        }
+        if(j+1<n){
+            right=solve(i+1,j+1,matrix,dp);
+        }
+        return dp[i][j]=min(down,min(left,right))+matrix[i][j];
+    }
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int ans=INT_MAX;
         int n=matrix.size();
-        int m=matrix[0].size();
-        vector<int>nxt(m);
-        vector<int>curr(m);
-        for(int j=0;j<m;j++){
-            nxt[j]=matrix[n-1][j];
-        }
-        for(int i=n-2;i>=0;i--){
-            for(int j=0;j<m;j++){
-                int d=nxt[j];
-                int l=INT_MAX;
-                int r=INT_MAX;
-                if(j-1>=0){
-                    l=nxt[j-1];
-                }
-                if(j+1<=m-1){
-                    r=nxt[j+1];
-                }
-                curr[j]= matrix[i][j] +min(l,min(d,r));
-
-            }
-            nxt=curr;
-        }
-        for(int i=0;i<m;i++){
-            ans=min(ans,nxt[i]);
+        vector<vector<int>>dp(n,vector<int>(n,INT_MAX));
+        for(int i=0;i<n;i++){
+            ans=min(ans,solve(0,i,matrix,dp));
         }
         return ans;
-        
+
         
     }
 };
