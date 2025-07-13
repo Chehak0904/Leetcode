@@ -1,36 +1,38 @@
 class Solution {
 public:
     string largestMerge(string word1, string word2) {
-        int n1=word1.size();
-        int n2=word2.size();
-        string temp="";
-        int i=0,j=0;
-        while(i<n1 && j<n2){
+        int n=word1.size();
+        int m=word2.size();
+        int i=0, j=0;
+        string merge="";
+        while(i<n && j<m){
             if(word1[i]>word2[j]){
-                temp+=word1[i];
+                merge+=word1[i];
                 i++;
             }
-            else if(word2[j]>word1[i]){
-                temp+=word2[j];
+            else if(word1[i]<word2[j]){
+                merge+=word2[j];
                 j++;
+            }
+            else{
+                 if(word1.substr(i)>word2.substr(j)){
+                    merge+=word1[i++];
+                    
+                }
+                else {
+                    merge+=word2[j++];
+                }
                 
-            }else{
-                if(word1.substr(i)>word2.substr(j)){
-                    temp+=word1[i++];
-                }
-                else{
-                    temp+=word2[j++];
-                }
             }
         }
-        while(i<n1){
-            temp+=word1[i++];
+        while(i<n){
+            merge+=word1[i];
+            i++;
         }
-        while(j<n2){
-            temp+=word2[j++];
-            
+        while(j<m){
+            merge+=word2[j];
+            j++;
         }
-        return temp;
-        
+        return merge;
     }
 };
