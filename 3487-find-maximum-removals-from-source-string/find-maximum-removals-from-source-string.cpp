@@ -39,7 +39,7 @@ public:
         unordered_set<int> s;
         for (int idx : targetIndices) s.insert(idx);
 
-        vector<vector<int>> dp(source.length() + 1, vector<int>(pattern.length() + 1, -1));
+        vector<vector<int>> dp(source.length(), vector<int>(pattern.length(), -1));
 
         int res = solve(0, 0, s, source, pattern, dp);
         return max(0, res); 
