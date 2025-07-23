@@ -1,59 +1,36 @@
 class Solution {
 public:
-    int count_ab(string& s) {
-        stack<char> st;
-        int cnt = 0;
-        for (char c : s) {
-            if (!st.empty() && st.top() == 'a' && c == 'b') {
+    int f(string &temp,char first,char sec,int p){
+        int points=0;
+        stack<int> st;
+        for(char ch:temp){
+            if(!st.empty() && st.top()==first && ch==sec){
                 st.pop();
-                cnt++;
-            } else {
-                st.push(c);
+                points+=p;
+            }
+            else{
+                st.push(ch);
             }
         }
-
-        string temp = "";
-        while (!st.empty()) {
-            temp.push_back(st.top());
+        temp="";
+        while(!st.empty()){
+            temp+=st.top();
             st.pop();
         }
-        reverse(temp.begin(), temp.end());
-        s = temp;
-        return cnt;
+        reverse(temp.begin(),temp.end());
+        return points;
     }
-
-    int count_ba(string& s) {
-        stack<char> st;
-        int cnt = 0;
-        for (char c : s) {
-            if (!st.empty() && st.top() == 'b' && c == 'a') {
-                st.pop();
-                cnt++;
-            } else {
-                st.push(c);
-            }
-        }
-
-        string temp = "";
-        while (!st.empty()) {
-            temp.push_back(st.top());
-            st.pop();
-        }
-        reverse(temp.begin(), temp.end());
-        s = temp;
-        return cnt;
-    }
-
+    
     int maximumGain(string s, int x, int y) {
-        int ans = 0;
-        if (x > y) {
-
-            ans += x * count_ab(s);
-            ans += y * count_ba(s);
-        } else {
-
-            ans += y * count_ba(s);
-            ans += x * count_ab(s);
+        string temp=s;
+        int ans=0;
+        if(x>y){
+            ans+=f(temp,'a','b',x);
+            ans+=f(temp,'b','a',y);
+        }
+        else{
+            ans+=f(temp,'b','a',y);
+            ans+=f(temp,'a','b',x);
         }
         return ans;
     }
