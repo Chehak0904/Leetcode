@@ -1,28 +1,19 @@
 class Solution {
 public:
     int maxSum(vector<int>& nums) {
-        unordered_map<int,int>mp;
-        int neg_count=0;
+        unordered_set<int> st;
         int maxi=INT_MIN;
-        for(int i=0;i<nums.size();i++){
-            if(nums[i]>0){
-                mp[nums[i]]++;
+        for(int num:nums){
+            if(num>=0){
+                st.insert(num);
             }
-            else{
-                neg_count++;
-                maxi=max(maxi,nums[i]);
-
-            }
+            maxi=max(num,maxi);//store highest neg
         }
-        int sum=0;
-        for(auto it:mp){
-            sum+=it.first;
-
+        if(st.empty())return maxi;
+        int res=0;
+        for(int s:st){
+            res+=s;
         }
-        if(neg_count==nums.size()){
-            return maxi;
-        }
-        return sum;
-        
+        return res;
     }
 };
