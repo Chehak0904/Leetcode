@@ -1,12 +1,12 @@
 class Solution {
 public:
-    void dfs(int node,unordered_map<int,vector<int>>&mp,vector<bool>&visited,unordered_set<int>&r,int &cnt){
-            if(r.find(node)!=r.end()) return;
+    void dfs(int node,unordered_map<int,vector<int>>&mp,vector<bool>&visited,int &cnt){
+             
             cnt++;
             visited[node]=true; 
             for(auto it:mp[node]){
                 if(!visited[it]){
-                    dfs(it,mp,visited,r,cnt);
+                    dfs(it,mp,visited,cnt);
                 }
             }
     }
@@ -20,11 +20,10 @@ public:
         }
         vector<bool>visited(n,false);
         int cnt=0;
-        unordered_set<int>s;
         for(int i=0;i<restricted.size();i++){
-            s.insert(restricted[i]);
+            visited[restricted[i]]=true;
         }
-        dfs(0,mp,visited,s,cnt);
+        dfs(0,mp,visited,cnt);
         return cnt;
 
     }
