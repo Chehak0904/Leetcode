@@ -1,23 +1,19 @@
 class Solution {
-public:
-    void solve(int idx, vector<int>& nums, int curr, int maxi, int& count) {
-        if (idx == nums.size()) {
-            if (curr == maxi) count++;
-            return;
+public: 
+    int f(int i, vector<int>& nums,int ans,int maxval){
+        if(i==nums.size()){
+            return (ans==maxval)?1:0;
         }
-
-        solve(idx + 1, nums, curr | nums[idx], maxi, count);
-        solve(idx + 1, nums, curr, maxi, count);
+        int t=f(i+1,nums,ans|nums[i],maxval);
+        int nt=f(i+1,nums,ans,maxval);
+        return t+nt;
     }
-
     int countMaxOrSubsets(vector<int>& nums) {
-        int maxi = 0;
-        for (int num : nums) {
-            maxi |= num;
+        int n=nums.size();
+        int maxval=0;
+        for(int i:nums){
+            maxval=maxval|i;
         }
-
-        int count = 0;
-        solve(0, nums, 0, maxi, count);
-        return count;
+        return f(0,nums,0,maxval);
     }
 };
