@@ -21,11 +21,11 @@ public:
             result = solve(i+1, j, k+1, s1, s2, s3);
         }
         
-        // if(result == true)
-        //     return t[i][j][k] = result;
+        if(result == true)
+            return t[i][j][k] = result;
         
         if(j < n && s2[j] == s3[k]) {
-            result |= solve(i, j+1, k+1,s1, s2, s3);
+            result = solve(i, j+1, k+1,s1, s2, s3);
         }
         return t[i][j][k] = result; 
     }
