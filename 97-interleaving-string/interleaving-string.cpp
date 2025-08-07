@@ -4,8 +4,8 @@ public:
            vector<vector<int>>& dp) {
         if (i == s1.size() && j == s2.size() && k == s3.size())
             return true;
-        if (k == s3.size())
-            return false;
+        // if (k == s3.size())
+        //     return false;
 
         if (dp[i][j] != -1)
             return dp[i][j];
