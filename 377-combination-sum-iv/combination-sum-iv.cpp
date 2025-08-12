@@ -1,18 +1,18 @@
 class Solution {
 public:
-    int func(vector<int>& nums, int target, vector<int>& dp) {
+    int func(int target,vector<int>& nums,vector<int>& dp){
         if(target==0) return 1;
         if(dp[target]!=-1) return dp[target];
-        int ans = 0;
-        for (auto num : nums) {
-            if (num <= target) {
-                ans += func(nums,target-num,dp);
+        int take=0;
+        for(int num:nums){
+            if(num<=target){
+                take+=func(target-num,nums,dp);
             }
         }
-        return dp[target] = ans;
+        return dp[target]= take;
     }
     int combinationSum4(vector<int>& nums, int target) {
-        vector<int>dp(target+1,-1);
-        return func(nums,target,dp);
+        vector<int> dp(target+1,-1);
+        return func(target,nums,dp);
     }
 };
