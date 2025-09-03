@@ -1,33 +1,28 @@
 class Solution {
 public:
-    string baseVal(int n,int b){
-        string val="";
-        while(n>0){
-            val=(char)(n%b +'0')+val;
+    string convert(int n,int b){
+        string s="";
+        while(n!=0){
+            int digit=n%b;
+            s+=digit+'0';
             n=n/b;
         }
-        return val;
+        reverse(s.begin(),s.end());
+        return s;
     }
-    bool isPalindrome(string val){
-        int len=val.length();
-        int l=0, r=len-1;
-        while(l<=r){
-            if(val[l]==val[r]){
-                l++, r--;
-            }
-            else{
-                return false;
-            }
+    bool isPalindrome(string s){
+        int i=0, j=s.length();
+        while(i<j){
+            if(s[i++]!=s[j--]) return false; 
         }
-        return true;
+        return false;
     }
     bool isStrictlyPalindromic(int n) {
-        for(int b=2;b<=n-2;b++){
-            string val=baseVal(n,b);
-            if(!isPalindrome(val)){
-                return false;
-            }
+        for(int i=2;i<=n-2;i++){
+            string s=convert(n,i);
+            if(!isPalindrome(s)) return false; 
         }
         return true;
+        
     }
 };
