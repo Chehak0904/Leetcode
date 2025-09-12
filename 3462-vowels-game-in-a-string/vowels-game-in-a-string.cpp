@@ -9,7 +9,8 @@ public:
             if(isVowel(ch)) cnt++;
         }
         if(cnt==0) return false;
-        if(cnt%2!=0) return true;
-        else return true;    
+        return true;
+        // if(cnt%2!=0) return true;
+        // else return true;    
     }
 };
