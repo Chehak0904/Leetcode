@@ -1,37 +1,30 @@
 class Solution {
 public:
     int canBeTypedWords(string text, string brokenLetters) {
+        int n=brokenLetters.size();
         unordered_set<char> st;
-        for (char c : brokenLetters) {
+        for(char c:brokenLetters){
             st.insert(c);
         }
-        string temp = "";
-        int total_count = 0;
-        int d = 0;
-        bool flag = true;
-        for (char c : text) {
-            if (c == ' ') {
-                total_count++;
-                temp = "";
-                if (flag == false) {
-                    d++;
-                    flag = true;
+        int cnt=0;
+        int i=0;
+        while(i<text.size()){
+            string s="";
+            while(i<text.size() && text[i]!=' '){
+                s+=text[i];
+                i++;
+            }
+            i++;
+            bool flag=true;
+            for(int j=0;j<s.size();j++){
+                if(st.find(s[j])!=st.end()){
+                    flag=false;
                 }
-            } else {
-                if (st.find(c) != st.end()) {
-                    flag = false;
-                }
-                temp.push_back(c);
+            }
+            if(flag){
+                cnt++;
             }
         }
-        
-        if(!temp.empty()){
-            total_count++;
-            if (flag == false) {
-                d++;
-                flag = true;
-            }
-        }
-        return total_count - d;
+        return cnt;
     }
 };
