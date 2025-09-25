@@ -1,20 +1,21 @@
 class Solution {
 public:
-    int solve(int i, int j, vector<vector<int>>& dp, vector<vector<int>>& triangle, int n) {
-        if (i == n - 1) {
-            return triangle[i][j];
-        }
-        if (dp[i][j] != INT_MAX) return dp[i][j];
-
-        int d1 = solve(i + 1, j, dp, triangle, n);
-        int d2 = solve(i + 1, j + 1, dp, triangle, n);
-        
-        return dp[i][j] = triangle[i][j] + min(d1, d2);
-    }
-
     int minimumTotal(vector<vector<int>>& triangle) {
-        int n = triangle.size();
-        vector<vector<int>> dp(n, vector<int>(n, INT_MAX));
-        return solve(0, 0, dp, triangle, n);
+        int n=triangle.size();
+        vector<vector<int>>dp(n,vector<int>(n,INT_MAX));
+        dp[0][0]=triangle[0][0];
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=i;j++){
+                int op1=INT_MAX;
+                int op2=INT_MAX;
+                op1=dp[i-1][j];
+                if(j-1>=0){
+                    op2=dp[i-1][j-1];
+                }
+                dp[i][j]=triangle[i][j]+min(op1,op2);
+            }
+        }
+        return *min_element(dp[n-1].begin(),dp[n-1].end());
+        
     }
 };
