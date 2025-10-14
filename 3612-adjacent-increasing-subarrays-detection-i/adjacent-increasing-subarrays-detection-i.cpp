@@ -1,27 +1,36 @@
 class Solution {
 public:
-    bool check(int i, int k, vector<int>& nums) {
-        if (i + k > nums.size()) return false;
-        for (int j = i + 1; j < i + k; j++) {
-            if (nums[j] <= nums[j - 1]) return false;
-        }
-        return true;
-    }
-
     bool hasIncreasingSubarrays(vector<int>& nums, int k) {
-        int n = nums.size();
-        for (int i = 0; i <n-k; i++) {
-            bool flag = true;
-            for (int j = i + 1; j < i + k; j++) {
-                if (nums[j] <= nums[j - 1]) {
-                    flag = false;
-                    break;
-                }
-            }
+        if (k == 1) return true;
 
-            if (flag) {
-                if (check(i + k, k, nums))
-                    return true;
+        vector<pair<int,int>> vec;
+        int start = 0;
+        int n = nums.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            if (nums[i] < nums[i + 1]) {
+                continue;
+            } else {
+                int len = i - start + 1;  
+                if (len >= k) {
+                    if (len >= 2 * k) return true; 
+                    vec.push_back({start, i});
+                }
+                start = i + 1;  
+            }
+        }
+
+        
+        int len = n - start;
+        if (len >= k) {
+            if (len >= 2 * k) return true;
+            vec.push_back({start, n - 1});
+        }
+
+        
+        for (int i = 1; i < vec.size(); i++) {
+            if (vec[i].first == vec[i - 1].second + 1) {
+                return true;
             }
         }
 
