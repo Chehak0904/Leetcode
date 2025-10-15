@@ -2,25 +2,22 @@ class Solution {
 public:
     int maximumEnergy(vector<int>& energy, int k) {
         int n=energy.size();
-        vector<int>prefix(n);
+        vector<int> preSum(n);
         int j=0;
         for(int i=n-1;i>=n-k;i--){
-            prefix[j]=energy[i];
+            preSum[j]=energy[i];
             j++;
         }
-        int l=0;
         int i=n-k-1;
+        int l=0;
         while(i>=0){
-            prefix[j]=energy[i]+prefix[l];
-            l++;
-            j++;
-            i--;
+            preSum[j]=energy[i]+preSum[l];
+            j++,l++,i--;
         }
-        int maxi=INT_MIN;
+        int total=INT_MIN;
         for(int i=0;i<n;i++){
-            maxi=max(maxi,prefix[i]);
+            total=max(total,preSum[i]);
         }
-        return maxi;
-        
+        return total;
     }
 };
