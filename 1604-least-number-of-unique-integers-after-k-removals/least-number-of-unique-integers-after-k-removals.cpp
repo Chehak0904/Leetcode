@@ -5,21 +5,23 @@ public:
         for(auto it:arr){
             mp[it]++;
         }
-        vector<pair<int,int>>vec;
-        for(auto it:mp){
-            vec.push_back({it.second,it.first});
+        vector<int>vec;
+        for(auto &it:mp){
+            vec.push_back(it.second);
         }
         sort(vec.begin(),vec.end());
-        for(int i=0;i<vec.size();i++){
-            while(vec[i].first!=0 && k>0){
-                vec[i].first--;
-                k--;
-                if(k==0) break;
+        int i=0;
+        while(k && i<vec.size()){
+            int t=vec[i];
+            if(k>=t){
+               k=k-t;
+               vec[i]=0;
             }
+            i++;
         }
         int cnt=0;
-        for(int i=0;i<vec.size();i++){
-            if(vec[i].first>0) cnt++;
+        for(int i:vec){
+            if(i>0) cnt++;
         }
         return cnt;
     }
