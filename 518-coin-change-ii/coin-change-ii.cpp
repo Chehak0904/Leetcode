@@ -1,22 +1,21 @@
 class Solution {
-public:
-    int solve(int idx,int amt,vector<int>&coins,vector<vector<int>>&dp){
-        if(idx>=coins.size()){
-            if(amt==0) return 1;
-            return 0;
+public: 
+    int f(int i,int amount,vector<int>& coins,vector<vector<int>> &dp){
+        if(amount==0) return 1;
+        if(i==coins.size()-1){
+            return (amount%coins[i]==0)? 1:0;
         }
-        if(dp[idx][amt]!=-1)return dp[idx][amt];
+        if(dp[i][amount]!=-1) return dp[i][amount];
+        int not_take=f(i+1,amount,coins,dp);
         int take=0;
-        if(amt>=coins[idx]){
-            take=solve(idx,amt-coins[idx],coins,dp);
+        if(coins[i]<=amount){
+            take=f(i,amount-coins[i],coins,dp);
         }
-        int not_take=solve(idx+1,amt,coins,dp);
-        return dp[idx][amt]=take+not_take;
+        return dp[i][amount]= not_take+take;
     }
     int change(int amount, vector<int>& coins) {
         int n=coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-        return solve(0,amount,coins,dp);
-        
+        vector<vector<int>> dp(n,vector<int>(amount+1,-1));
+        return f(0,amount,coins,dp);
     }
 };
