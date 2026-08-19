@@ -1,33 +1,25 @@
 class Solution {
 public:
     int maxNumberOfFamilies(int n, vector<vector<int>>& reservedSeats) {
-        unordered_map<int, unordered_set<int>> mp;
-        for (int i = 0; i < reservedSeats.size(); i++) {
-            int r = reservedSeats[i][0];
-            int c = reservedSeats[i][1];
-            mp[r].insert(c);
+        unordered_map<int,vector<int>>mp;
+        for(int i=0;i<reservedSeats.size();i++){
+            mp[reservedSeats[i][0]].push_back(reservedSeats[i][1]);
         }
-        int rem = (n - mp.size()) * 2;
-        for (auto it : mp) {
-            bool flag = false;
-            unordered_set<int> st = it.second;
-            if (st.find(2) == st.end() && st.find(3) == st.end() &&
-                st.find(4) == st.end() && st.find(5) == st.end()) {
-                rem++;
-                flag = true;
+        int ans=(n-mp.size())*2;
+        for(auto it:mp){
+            vector<int>temp=it.second;
+             bool left=true;
+             bool right=true;
+             bool middle=true;
+            for(int i:temp){
+                if(i>=2 && i<=5) left=false;
+                if(i>=4 && i<=7) middle=false;
+                if(i>=6 && i<=9) right=false;
             }
-            if (st.find(6) == st.end() && st.find(7) == st.end() &&
-                st.find(8) == st.end() && st.find(9) == st.end()) {
-                rem++;
-                flag = true;
-            }
-            if (!flag) {
-                if (st.find(4) == st.end() && st.find(5) == st.end() &&
-                    st.find(6) == st.end() && st.find(7) == st.end()) {
-                    rem++;
-                }
-            }
+            if(left && right && middle) ans+=2;
+            else if(left || right || middle) ans+=1;
         }
-        return rem;
+        return ans;
+        
     }
 };
