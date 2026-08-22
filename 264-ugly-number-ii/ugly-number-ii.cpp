@@ -1,22 +1,29 @@
 class Solution {
 public:
-    
-    void fun(long long n,set<int>&st){
-        if(n>INT_MAX || st.count(n)) return;
-        st.insert(n);
-        fun(n*2,st);
-        fun(n*3,st);
-        fun(n*5,st);
-    }
     int nthUglyNumber(int n) {
-        set<int>st;
-        fun(1,st);
-        for(auto it:st){
-            if(--n==0){
-                return it;
+        priority_queue<long long, vector<long long>, greater<long long>> pq;
+        unordered_set<long long> vis;
+
+        pq.push(1);
+        vis.insert(1);
+
+        while (n--) {
+            long long num = pq.top();
+            pq.pop();
+
+            if (n == 0)
+                return num;
+
+            for (long long x : {2, 3, 5}) {
+                long long next = num * x;
+
+                if (!vis.count(next)) {
+                    vis.insert(next);
+                    pq.push(next);
+                }
             }
         }
-        return 0;
-        
+
+        return -1;
     }
 };
