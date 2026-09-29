@@ -31,8 +31,11 @@ public:
     bool hasValidPath(vector<vector<char>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
+        //i->0-n-1
+        //j->->m-1;
+        //b- m+n+1
 
-        dp.assign(n, vector<vector<int>>(m, vector<int>(n + m + 1, -1)));
+        dp.assign(n, vector<vector<int>>(m, vector<int>(n + m, -1)));
 
         return solve(n-1, m-1, 0, grid);
     }
